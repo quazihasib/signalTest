@@ -19,107 +19,113 @@ import org.jivesoftware.smack.util.StringUtils;
 
 import java.util.ArrayList;
 
-public class Transmitter extends Activity {
+public class Transmitter extends Activity 
+{
 
-    private ArrayList<String> messages = new ArrayList();
-    private Handler mHandler = new Handler();
-    private SettingsDialogTransmitter mDialog;
-    private EditText mRecipient;
-    private EditText mSendText;
-    private ListView mList;
-    private XMPPConnection connection;
+	private ArrayList<String> messages = new ArrayList<String>();
+	private Handler mHandler = new Handler();
+	private SettingsDialogTransmitter mDialog;
+	private EditText mRecipient;
+	private EditText mSendText;
+	private ListView mList;
+	private XMPPConnection connection;
 
-    /**
-     * Called with the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle icicle)
-    {
-        super.onCreate(icicle);
-        Log.i("XMPPClientPar", "onCreate called");
-        setContentView(R.layout.main_parent);
 
-        mRecipient = (EditText) this.findViewById(R.id.recipient);
-        Log.i("XMPPClientPar", "mRecipient = " + mRecipient);
-        mSendText = (EditText) this.findViewById(R.id.sendText);
-        Log.i("XMPPClientPar", "mSendText = " + mSendText);
-        mList = (ListView) this.findViewById(R.id.listMessages);
-        Log.i("XMPPClientPar", "mList = " + mList);
-        setListAdapter();
+	
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
+		Log.i("XMPPClientPar", "onCreate called");
+		setContentView(R.layout.main_parent);
 
-        // Dialog for getting the xmpp settings
-        mDialog = new SettingsDialogTransmitter(this);
+		mRecipient = (EditText) this.findViewById(R.id.recipient);
+		Log.i("XMPPClientPar", "mRecipient = " + mRecipient);
+		mSendText = (EditText) this.findViewById(R.id.sendText);
+		Log.i("XMPPClientPar", "mSendText = " + mSendText);
+		mList = (ListView) this.findViewById(R.id.listMessages);
+		Log.i("XMPPClientPar", "mList = " + mList);
+		setListAdapter();
 
-        // Set a listener to show the settings dialog
-        Button setup = (Button) this.findViewById(R.id.setup);
-        setup.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        mDialog.show();
-                    }
-                });
-            }
-        });
+		// Dialog for getting the xmpp settings
+		mDialog = new SettingsDialogTransmitter(this);
 
-        // Set a listener to send a chat text message
-        Button send = (Button) this.findViewById(R.id.send);
-        send.setOnClickListener(new View.OnClickListener() 
-        {
-            public void onClick(View view)
-            {
-                String to = "codemen.ridwan@gmail.com";//mRecipient.getText().toString();
-                String text = mSendText.getText().toString();
+		// Set a listener to show the settings dialog
+		Button setup = (Button) this.findViewById(R.id.setup);
+		setup.setOnClickListener(new View.OnClickListener() 
+		{
+			public void onClick(View view) 
+			{
+				mHandler.post(new Runnable()
+				{
+					public void run() 
+					{
+						mDialog.show();
+					}
+				});
+			}
+		});
 
-                Log.i("XMPPClientPar", "Sending text [" + text + "] to [" + to + "]");
-                Message msg = new Message(to, Message.Type.chat);
-                msg.setBody(text);
-                connection.sendPacket(msg);
-                messages.add(connection.getUser() + ":");
-                messages.add(text);
-                setListAdapter();
-            }
-        });
-    }
+		// Set a listener to send a chat text message
+		Button send = (Button) this.findViewById(R.id.send);
+		send.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View view) 
+			{
+				String to = "codemen.ridwan@gmail.com";// mRecipient.getText().toString();
+				String text = mSendText.getText().toString();
 
-    /**
-     * Called by Settings dialog when a connection is establised with the XMPP server
-     *
-     * @param connection
-     */
-    public void setConnection
-            (XMPPConnection
-                    connection) 
-    {
-        this.connection = connection;
-        if (connection != null) {
-            // Add a packet listener to get messages sent to us
-            PacketFilter filter = new MessageTypeFilter(Message.Type.chat);
-            connection.addPacketListener(new PacketListener() {
-                public void processPacket(Packet packet) {
-                    Message message = (Message) packet;
-                    if (message.getBody() != null) {
-                        String fromName = StringUtils.parseBareAddress(message.getFrom());
-                        Log.i("XMPPClientPar", "Got text [" + message.getBody() + "] from [" + fromName + "]");
-                        messages.add(fromName + ":");
-                        messages.add(message.getBody());
-                        // Add the incoming message to the list view
-                        mHandler.post(new Runnable() {
-                            public void run() {
-                                setListAdapter();
-                            }
-                        });
-                    }
-                }
-            }, filter);
-        }
-    }
+				Log.i("XMPPClientPar", "Sending text [" + text + "] to [" + to
+						+ "]");
+				Message msg = new Message(to, Message.Type.chat);
+				msg.setBody(text);
+				connection.sendPacket(msg);
+				messages.add(connection.getUser() + ":");
+				messages.add(text);
+				setListAdapter();
+			}
+		});
+	}
 
-    private void setListAdapter() 
-    {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.multi_line_list_item_parent,
-                messages);
-        mList.setAdapter(adapter);
-    }
+	
+	public void setConnection(XMPPConnection connection)
+	{
+		this.connection = connection;
+		if (connection != null)
+		{
+			// Add a packet listener to get messages sent to us
+			PacketFilter filter = new MessageTypeFilter(Message.Type.chat);
+			connection.addPacketListener(new PacketListener() 
+			{
+				public void processPacket(Packet packet) 
+				{
+					Message message = (Message) packet;
+					if (message.getBody() != null) 
+					{
+						String fromName = StringUtils.parseBareAddress(message
+								.getFrom());
+						Log.i("XMPPClientPar", "Got text [" + message.getBody()
+								+ "] from [" + fromName + "]");
+						messages.add(fromName + ":");
+						messages.add(message.getBody());
+						// Add the incoming message to the list view
+						mHandler.post(new Runnable() 
+						{
+							public void run()
+							{
+								setListAdapter();
+							}
+						});
+					}
+				}
+			}, filter);
+		}
+	}
+
+	private void setListAdapter()
+	{
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.multi_line_list_item_parent, messages);
+		mList.setAdapter(adapter);
+	}
 }

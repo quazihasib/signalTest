@@ -71,7 +71,7 @@ public class Receiver extends Activity implements OnInitListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 			
-				Intent vintent=new Intent(v.getContext(),Starter.class);
+				Intent vintent=new Intent(v.getContext(),MainActivity.class);
 				startActivityForResult(vintent, 0);
 				setResult(0);
 				finish();

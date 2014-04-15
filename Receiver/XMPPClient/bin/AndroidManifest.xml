@@ -5,7 +5,7 @@
 
     <application  
             android:label="@string/app_name">
-        <activity android:name=".Starter" android:label="Starter">
+        <activity android:name=".MainActivity" android:label="StartSignal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -15,4 +15,4 @@
         <activity android:name="Transmitter" android:label="Transmitter"></activity>
         
     </application>
-</manifest> 
+</manifest>   
