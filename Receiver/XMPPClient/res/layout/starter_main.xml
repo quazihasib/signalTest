@@ -8,12 +8,12 @@
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PARENT" />
+        android:text="Transmitter" />
 
     <Button
         android:id="@+id/child"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CHILD" />
+        android:text="Receiver" />
 
 </LinearLayout>
