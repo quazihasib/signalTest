@@ -124,7 +124,7 @@ public class XmppLogin
 					{
 						String fromName = StringUtils.parseBareAddress(message.getFrom());
 							Log.d(DEBUG_TAG, "Got text [" + message.getBody()+ "] from [" + fromName + "]");
-						Receiver.messages.add(fromName + ":");
+						//Receiver.messages.add(fromName + ":");
 						Receiver.messages.add(message.getBody());
 						// Add the incoming message to the list view
 						Receiver.mHandler.post(new Runnable() 
