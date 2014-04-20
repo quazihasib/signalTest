@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/sendSignal1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Signal1" >
+    </Button>
+
+    <Button
+        android:id="@+id/sendSignal2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Signal2" />
+
+    <Button
+        android:id="@+id/sendSignal3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Signal3" />
+
+</LinearLayout>
