@@ -35,6 +35,7 @@ public class Transmitter extends Activity
 		//start login connection using transmitter id
 		XmppLogin.SetLoginConnection("transmitterid@gmail.com", "transmitter123", 1);
 
+		
 		// Send signal1
 		Button send1 = (Button) this.findViewById(R.id.sendSignal1);
 		send1.setOnClickListener(new View.OnClickListener()
@@ -71,25 +72,6 @@ public class Transmitter extends Activity
 	public static void setTransmitterConnection(XMPPConnection connection)
 	{
 		Transmitter.connection = connection;
-		if (connection != null)
-		{
-			// Add a packet listener to get messages sent to us
-			PacketFilter filter = new MessageTypeFilter(Message.Type.chat);
-			connection.addPacketListener(new PacketListener() 
-			{
-				public void processPacket(Packet packet) 
-				{
-					Message message = (Message) packet;
-					if (message.getBody() != null) 
-					{
-						String fromName = StringUtils.parseBareAddress(message
-								.getFrom());
-						Log.d(DEBUG_TAG, "Got text [" + message.getBody()+ "] from [" + fromName + "]");
-
-					}
-				}
-			}, filter);
-		}
 	}
 	
 	//setting the text as a message

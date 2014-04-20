@@ -81,6 +81,7 @@ public class XmppLogin
 			if(number==1)
 			{
 				Transmitter.setTransmitterConnection(connection);
+				Functions.friendlist(connection);
 			}
 			else if(number==2)
 			{
