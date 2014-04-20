@@ -11,6 +11,7 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 
+import android.content.Intent;
 import android.util.Log;
 
 public class XmppLogin
@@ -80,8 +81,9 @@ public class XmppLogin
 			connection.sendPacket(presence);
 			if(number==1)
 			{
+				//check friend list
+				Functions.friendlist(connection,1);
 				Transmitter.setTransmitterConnection(connection);
-				Functions.friendlist(connection);
 			}
 			else if(number==2)
 			{
@@ -102,6 +104,9 @@ public class XmppLogin
 			{
 				Receiver.setReceiverConnection(null);
 			}
+			
+			MainActivity.instance.startActivity(new Intent(MainActivity.instance.getBaseContext(), MainActivity.class));
+			MainActivity.instance.finish();
 		}
 	}
 	

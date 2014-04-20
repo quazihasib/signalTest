@@ -33,7 +33,7 @@ public class Receiver extends Activity
     
     static String DEBUG_TAG=Receiver.class.getSimpleName();
     
-    
+    public static String rId, rPassword, rtId;
     
     @Override
     public void onCreate(Bundle icicle)
@@ -45,8 +45,12 @@ public class Receiver extends Activity
 
         receiverLogin = new XmppLogin(this);
         
+        rId = "quazi.hasib13@gmail.com";
+        rPassword = "masters13";
+        rtId = "quazi.hasib14@gmail.com";
+        
         //start login connection using transmitter id
-        XmppLogin.SetLoginConnection("receiverid123@gmail.com", "receiver123", 2);
+        XmppLogin.SetLoginConnection(rId, rPassword, 2);
         
         //instantiating the list for setting messages in the list
         mList = (ListView) this.findViewById(R.id.listMessages);
@@ -68,6 +72,10 @@ public class Receiver extends Activity
   		Receiver.connection = connection;
   		if (connection != null)	
   		{
+  			
+  			//check friend list
+			Functions.friendlist(connection,2);
+			
   			// Add a packet listener to get messages sent to us
   			PacketFilter filter = new MessageTypeFilter(Message.Type.chat);
   			connection.addPacketListener(new PacketListener() 
